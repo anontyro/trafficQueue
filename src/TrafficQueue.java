@@ -7,11 +7,14 @@ import simplesim.*;
 import java.awt.Graphics;
 import java.util.*;
 
+
 public class TrafficQueue implements ThingBeingSimulated {
     
     private ArrayList<RoadVehicle>vehicleQueue;
     private int vehiclesInQueue = 0;
     private int queueSize = 0;
+    private int maxX = 0;
+    private int maxY = 0;
     
     
  
@@ -131,9 +134,7 @@ public class TrafficQueue implements ThingBeingSimulated {
         vehiclesInQueue--;
         return vehicleRemove;
     }
-    
-        
-    public void display(Graphics g){}
+
     
     public ThingBeingSimulated reset(){
         vehicleQueue.clear();
@@ -145,6 +146,7 @@ public class TrafficQueue implements ThingBeingSimulated {
     }
     
     public void simstep() throws SimulationException{
+        
         
        Random random = new Random();
         
@@ -163,28 +165,33 @@ public class TrafficQueue implements ThingBeingSimulated {
         
         RoadVehicle[] vehicleList ={car1,car2,bus1,bus2,van,lorry,fireEngine1,
             fireEngine2};
+        
+        String summary = " ";
+        
         try{
-            String outputLetter = " ";
-        
-
-        if(this.isFull()){
-            String summary = " ";
-            int vehicleRandom = random.nextInt(8);
+            if(this.isFull()){
+                String newVehicle = " ";
+                int ranVehicle = random.nextInt(8);
+                this.remove();
+                this.add(vehicleList[ranVehicle]);
+                newVehicle = vehicleList[ranVehicle].toString();
+                
+                for(int i = 0; i < queueSize; i++){
+                    summary += vehicleQueue.get(i).getLetter();                                       
+                }
+                
+                System.out.println(summary);
+                System.out.println("The last vehicle added was: " + newVehicle);
+                                
+            }
             
-            this.remove();            
-            this.add(vehicleList[vehicleRandom]);
+            for(int i = 0; i < queueSize; i++){
+                int ranVehicle = random.nextInt(8);
+                this.add(vehicleList[ranVehicle]);
+                summary += vehicleQueue.get(i).getLetter();
+            }
+            System.out.println(summary);
             
-           for(int i = 0; i < queueSize ;i++){
-              summary += this.getLetter(vehicleQueue.get(i));
-           }
-           System.out.println(summary);
-        }
-        
-        int vehicleRandom = random.nextInt(8);
-        this.add(vehicleList[vehicleRandom]);
-        outputLetter = this.getLetter(vehicleList[vehicleRandom]);
-        System.out.print(outputLetter);
-        vehiclesInQueue++;
         }
 
         catch(QueueFullException full){
@@ -195,7 +202,13 @@ public class TrafficQueue implements ThingBeingSimulated {
         
     }
     
-    public void setBounds(int maxX, int maxY){
+    public void setBounds(int maxX, int maxY){        
+        this.maxX = maxX;
+        this.maxY = maxY;
+    }
+    
+    public void display(Graphics g){
+        
         
     }
     
