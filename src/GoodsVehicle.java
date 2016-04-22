@@ -33,7 +33,10 @@ public class GoodsVehicle extends RoadVehicle {
         return super.toString() + " " + type + ", Max weight = " 
                 + weight +" Kg";
     }
-    
+/**
+ * 
+ * returns the first letter of a goods vehicle from its type
+ */    
     public String getLetter(){
         char letter = this.type.charAt(0);
         String getLetter = Character.toString(letter);

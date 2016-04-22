@@ -28,7 +28,7 @@ public class FireEngine extends EmergencyVehicle {
   */   
     public String toString(){
         
-        if(getColour() == "Red"){
+        if((getColour().equals("Red"))){
             
             if(getCodeBlue() == true){
                 return "Fire Engine: CODEBLUE"; 
@@ -44,7 +44,11 @@ public class FireEngine extends EmergencyVehicle {
             }
         }
     }
-    
+
+/**
+ * 
+ * returns the letter "F" as a String to represent FireEngine 
+ */    
     public String getLetter(){
         return "F";
     }

@@ -18,9 +18,7 @@ public class TrafficQueue implements ThingBeingSimulated {
     private int maxY = 0;
     private String summary = " ";
     private String printLetter = " ";
-
     
- 
 /**
  * 
  * Creates a new TrafficQueue with a specific queue length 
@@ -52,20 +50,14 @@ public class TrafficQueue implements ThingBeingSimulated {
             throw (new QueueFullException(queueSize));
         }
         
-        if(vehicle instanceof EmergencyVehicle ){
-            EmergencyVehicle emV;
-            emV = (EmergencyVehicle) vehicle;
-            
-            if(((EmergencyVehicle) vehicle).getCodeBlue() == true){
-               addToFront(vehicle);
-            }else{
-                addToBack(vehicle);
-            }                         
-    }else{
-            addToBack(vehicle);
+        else if(vehicle instanceof EmergencyVehicle && ((EmergencyVehicle)vehicle).getCodeBlue()){
+            addToFront(vehicle);
         }
-        
+        else{
+            addToBack(vehicle);
+        }       
     }
+    
     private void addToBack(RoadVehicle vehicle){
         vehicleQueue.add(vehicle);
         vehiclesInQueue++;
@@ -108,16 +100,13 @@ public class TrafficQueue implements ThingBeingSimulated {
     }
 /**
  * 
- * Returns a String reading "There are +carsInQueue + cars in the Queue,
- * they are:"
- * It will then print out the cars in queue showing the make, colour and fuel
- * of each car on separate lines
+ * Used to represent the name of the GUI
+ * return "Traffic Queue Simulation
  */    
     public String toString(){
 
         return "Traffic Queue Simulation";
-                //"There are " +vehiclesInQueue + " cars in the Queue,"
-                  //  + "they are:" +"\n" + vehicleQueue.toString();
+
     }
 /**
  * 
@@ -138,12 +127,26 @@ public class TrafficQueue implements ThingBeingSimulated {
         return vehicleRemove;
     }
 
-    
+/**
+ * 
+ * Will reset the TraffiCQueue to its start values 
+ * returns a TrafficQueue reset to previous stated conditions
+ */    
     public ThingBeingSimulated reset(){
         
         return new TrafficQueue(queueSize) ;
     }
-    
+
+/**
+ * Runs a step of the simulation which will first populate the queue with a 
+ * random vehicle per step until it reaches its limit in which case it will
+ * remove the first vehicle and add a new random vehicle to the end
+ * 
+ * @throws SimulationException is thrown after QueueFullException is caught
+ * SimulationException will print: "List contains: " +vehiclesInQueue+
+ *  " vehicles max capacity is: "+queueSize + 
+ *  " First vehicle has been release and new one joins"
+ */    
     public void simstep() throws SimulationException{
         
         
@@ -156,7 +159,7 @@ public class TrafficQueue implements ThingBeingSimulated {
         Bus bus2 = new Bus("Green", 350);
         
         GoodsVehicle van = new GoodsVehicle("Pink",400,"Van");
-        GoodsVehicle lorry = new GoodsVehicle("Orange",100,"lorry");
+        GoodsVehicle lorry = new GoodsVehicle("Orange",100,"Lorry");
         
         FireEngine fireEngine1 = new FireEngine();
         FireEngine fireEngine2 = new FireEngine("Black");
@@ -199,25 +202,36 @@ public class TrafficQueue implements ThingBeingSimulated {
         catch(QueueFullException full){
            throw new SimulationException("List contains: " +vehiclesInQueue+
                    " vehicles max capacity is: "+queueSize + 
-                   "First vehicle has been release and new one joins");                    
+                   " First vehicle has been release and new one joins");                    
             
         }
 
         
     }
-    
+/**
+ * method takes int maxX, int maxY to set the bounds for the GUI 
+ */    
     public void setBounds(int maxX, int maxY){        
         this.maxX = maxX;
         this.maxY = maxY;
     }
-    
+
+/**
+ * Graphics g method which will display the vehicle letters with the summary 
+ * list appearing below with the vehicle removed
+ */    
     public void display(Graphics g){
         
         g.drawString(printLetter, 100, 150);
         g.drawString(summary, 100, 175);
         
     }
-    
+/**
+ * 
+ * Take a vehicle object and returns the getLetter() for said vehicle as a 
+ * String
+ *  
+ */    
     public String getLetter(RoadVehicle vehicle){
         return vehicle.getLetter();
     }

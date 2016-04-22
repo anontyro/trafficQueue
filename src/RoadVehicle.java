@@ -61,7 +61,10 @@ public abstract class RoadVehicle {
     public String toString(){
         return colour;
     }
-    
+/**
+ * 
+ * abstract class that returns a String value 
+ */    
     public abstract String getLetter();
         
     

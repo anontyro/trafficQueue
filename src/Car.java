@@ -31,7 +31,11 @@ public class Car extends RoadVehicle {
     public String toString(){
        return super.toString() + " " + make;
     }
-    
+
+/**
+ * 
+ * returns the letter "C" as a String representing cars 
+ */    
     public String getLetter(){
         return "C";
     }

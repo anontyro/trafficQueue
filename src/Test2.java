@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author Alex
+ * Test class that runs a simulationFrame and creates a TrafficQueue of size 20
  */
 import simplesim.*;
 
