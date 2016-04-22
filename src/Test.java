@@ -1,6 +1,6 @@
 /**
  *Testing class
- *
+ */
 import java.util.Random;
 import simplesim.*;
 
